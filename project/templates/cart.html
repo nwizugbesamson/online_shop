@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+
+{% block banner %}
+       <!-- Start Banner Area -->
+       <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+          
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+{% endblock banner %}
+    
+
+ 
+
+{% block content %}
+        <!--================Cart Area =================-->
+        <section class="cart_area">
+            <div class="container">
+                <div class="cart_inner">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for amount, product in product_dict.items() %}
+                                
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="img/cart.jpg" alt="">
+                                            </div>
+                                            <div class="media-body">
+                                                <p>{{product.name}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>${{product.price}}</h5>
+                                    </td>
+                                    <td>
+                                      {{amount // product.price}}
+                                    </td>
+                                    <td>
+                                        <h5>${{amount}}</h5>
+                                    </td>
+                                    <td>
+                                        <p><a class="primary-btn" href="{{url_for('main.cart_item_delete_page', product_id=product.id)}}">DEL</a></p>
+                                    </td>
+                                </tr>
+                               
+                                
+                                {% endfor %}
+                                    
+                                
+                          
+                            
+                                <tr>
+                                    <td>
+    
+                                    </td>
+                                    <td>
+    
+                                    </td>
+                                    <td>
+                                        <h5>Subtotal</h5>
+                                    </td>
+                                    <td>
+                                        <h5>{{current_user.bill}}</h5>
+                                    </td>
+                                </tr>
+                            
+                                <tr class="out_button_area">
+                                    <td>
+    
+                                    </td>
+                                    <td>
+    
+                                    </td>
+                                    <td>
+    
+                                    </td>
+                                    <td>
+                                        <div class="checkout_btn_inner d-flex align-items-center">
+                                            <a class="gray_btn" href="{{url_for('main.home_page')}}">Continue Shopping</a>
+                                            <a class="primary-btn" href="{{url_for('main.create_checkout_session')}}">Proceed to checkout</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================End Cart Area =================-->
+{% endblock content %}
+    
+

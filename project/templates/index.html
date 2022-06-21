@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<!-- End Header Area -->
+
+	<!-- start banner Area -->
+	<section class="banner-area">
+		<div class="container">
+			<div class="row fullscreen align-items-center justify-content-start">
+				<div class="col-lg-12">
+					
+						
+						<div class="row single-slide align-items-center d-flex">
+							<div class="col-lg-5 col-md-6">
+								<div class="banner-content">
+									<h1>Nike New <br>Collection!</h1>
+									<p>Luxury shoes for every occasion.</p>
+								
+								</div>
+							</div>
+							
+						</div>
+						
+						
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
+
+	<!-- start features Area -->
+	<section class="features-area section_gap">
+		<div class="container">
+			<div class="row features-inner">
+				<!-- single features -->
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="single-features">
+						<div class="f-icon">
+							<img src="img/features/f-icon1.png" alt="">
+						</div>
+						<h6>Free Delivery</h6>
+						<p>Free Shipping on all order</p>
+					</div>
+				</div>
+				<!-- single features -->
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="single-features">
+						<div class="f-icon">
+							<img src="img/features/f-icon2.png" alt="">
+						</div>
+						<h6>Return Policy</h6>
+						<p>Free Shipping on all order</p>
+					</div>
+				</div>
+				<!-- single features -->
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="single-features">
+						<div class="f-icon">
+							<img src="img/features/f-icon3.png" alt="">
+						</div>
+						<h6>24/7 Support</h6>
+						<p>Free Shipping on all order</p>
+					</div>
+				</div>
+				<!-- single features -->
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="single-features">
+						<div class="f-icon">
+							<img src="img/features/f-icon4.png" alt="">
+						</div>
+						<h6>Secure Payment</h6>
+						<p>Free Shipping on all order</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end features Area -->
+
+
+
+	<!-- start product Area -->
+	<section class=" active-product-area section_gap">
+		<!-- single product slide -->
+		
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-6 text-center">
+						<div class="section-title">
+							<h1>Available Products</h1>
+							
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					
+					{% if products %}
+					{% for product in products.items  %}
+					<!-- single product -->
+					<div class="col-lg-3 col-md-6">
+						<div class="single-product">
+							<img class="img-fluid" src="{{product.img_url}}" alt="{{product.name}}">
+							<div class="product-details">
+								<h6>{{product.name}}</h6>
+								<div class="price">
+									<h6>${{product.price}}</h6>
+									
+								</div>
+								<div class="prd-bottom">
+									
+									<a href="{{url_for('main.add_cart', product_id=product.id)}}" class="social-info">
+										<span class="ti-bag"></span>
+										<div class="product_count">
+							
+						</div>
+										<p class="hover-text">add to bag</p>
+									</a>
+									
+									<a href="{{url_for('main.product_page', product_id=product.id)}}" class="social-info">
+										<span class="lnr lnr-move"></span>
+										<p class="hover-text">view more</p>
+									</a>
+									
+									{% if current_user.id == 1 %}
+									<a href="{{url_for('main.edit_product_page', product_id=product.id)}}" class="social-info">
+										<span class="ti-write"></span>
+										<p class="hover-text">EDIT</p>
+									</a>
+									<a href="{{url_for('main.product_page', product_id=product.id)}}" class="social-info">
+										<span class="ti-power-off"></span>
+										<p class="hover-text">DELETE</p>
+									</a>
+									{% endif %}
+										
+									
+								</div>
+							</div>
+						</div>
+					</div>
+			
+					{% endfor %}
+					{% endif %}
+						
+					
+						
+					
+					
+				</div>
+			</div>
+		
+		<!-- single product slide -->
+		<div >
+		
+		</div>
+	</section>
+	<!-- end product Area -->
+
+	
+
+	<!-- Start brand Area -->
+	<section class="brand-area section_gap">
+		<div class="container">
+			<div class="row">
+				<a class="col single-img" href="#">
+					<img class="img-fluid d-block mx-auto" src="{{ url_for('static', filename='img/brand/1.png') }}" alt="">
+				</a>
+				<a class="col single-img" href="#">
+					<img class="img-fluid d-block mx-auto" src="{{ url_for('static', filename='img/brand/2.png') }}" alt="">
+				</a>
+				<a class="col single-img" href="#">
+					<img class="img-fluid d-block mx-auto" src="{{ url_for('static', filename='img/brand/3.png') }}" alt="">
+				</a>
+				<a class="col single-img" href="#">
+					<img class="img-fluid d-block mx-auto" src="{{ url_for('static', filename='img/brand/4.png') }}" alt="">
+				</a>
+				<a class="col single-img" href="#">
+					<img class="img-fluid d-block mx-auto" src="{{ url_for('static', filename='img/brand/5.png') }}" alt="">
+				</a>
+			</div>
+		</div>
+	</section>
+	<!-- End brand Area -->
+	
+
+	<section>
+		{% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+		
+		{% if products.page == page_num  %}
+			<a class="primary-btn" href="{{url_for('main.home_page', page=page_num)}}">{{page_num}}</a>
+		{% else %}
+			<a class="button" href="{{url_for('main.home_page', page=page_num)}}">{{page_num}}</a>
+		{% endif %}
+			
+	{% else %}
+		...
+	{% endif %}
+{% endfor %}
+	</section>
+	
+
+{% endblock content %}

@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+
+{% block banner %}
+	
+
+	
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+				
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+{% endblock banner %}
+
+
+{% block content %}
+	
+
+	
+
+	<!--================Single Product Area =================-->
+	<div class="product_image_area">
+		<div class="container">
+			<div class="row s_product_inner">
+				<div class="col-lg-6">
+			
+						<div class="single-prd-item">
+							<img class="img-fluid" src="{{product.img_url}}" alt="{{product.name}}">
+						</div>
+				
+					
+				</div>
+				<div class="col-lg-5 offset-lg-1">
+					<div class="s_product_text">
+						<h3>{{product.name}}</h3>
+						<h2>${{product.price}}</h2>
+						<!-- admin edit button -->
+						<ul class="list">
+							
+							<li><a href="#"><span>Availibility</span> : In Stock</a></li>
+						</ul>
+						<p>{{product.description}}</p>
+						<div class="product_count">
+							<form  action="{{url_for('main.product_page', product_id=product.id)}}" method="POST"  novalidate="novalidate">
+							{{form.csrf_token}}
+							{{form.quantity}}
+							{{form.submit}}
+							{% if form.errors %}
+								<ul class="errors">
+									{% for error in form.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+							</form>
+						</div>
+						<div class="card_area d-flex align-items-center">
+							
+							{% if current_user.has_liked_product(product) %}
+							<a class="icon_btn" href="{{url_for('main.like_action', action='unlike', product_id=product.id)}}"><i class="fa-solid fa-heart"></i></a><br>
+						
+								<strong>{{product.likes | length}}</strong>
+							
+							{% else %}
+								<a class="icon_btn" href="{{url_for('main.like_action', action='like', product_id=product.id)}}"><i class="lnr lnr lnr-heart"></i> </a><br>
+								
+								
+								<strong>{{product.likes | length}}</strong>
+								
+									
+								
+							{% endif %}
+								
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================End Single Product Area =================-->
+
+	<!--================Product Description Area =================-->
+	<section class="product_description_area">
+		<div class="container">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+			
+			
+				<li class="nav-item">
+					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+					 aria-selected="false">Reviews</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				
+		
+				<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="row total_rate">
+								<div class="col-6">
+									<div class="box_total">
+										<h5>Overall</h5>
+										
+										{% if product.reviews %}
+										<h6>({{product.reviews | length}} Reviews)</h6>
+										{% else %}
+										<h6>(0 Reviews)</h6>
+										{% endif %}
+											
+										
+									</div>
+								</div>
+								<div class="col-6">
+									
+								</div>
+							</div>
+							<div class="review_list">
+								
+								{% if product.reviews %}
+									
+									{% for review in product.reviews %}
+									<div class="review_item">
+										<div class="media">
+											<div class="d-flex">
+												<img src="{{review.user.email | gravatar}}" alt="image for user: {{review.user.username}}">
+											</div>
+											<div class="media-body">
+												<h4>{{review.user.username}}</h4>
+											
+											</div>
+										</div>
+										<p>{{review.comment}}</p>
+									</div>
+									{% endfor %}
+										
+								{% endif %}
+									
+							
+							
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="review_box">
+								<h4>Add a Review</h4>
+								
+								
+								<form class="row contact_form" action="{{url_for('main.product_page', product_id=product.id, action='review')}}" method="POST"  novalidate="novalidate">
+									
+									<div class="col-md-12">
+										<div class="form-group">
+											{{rev_form.review}}
+											</div>
+											{{rev_form.submit}}
+									</div>
+									<div class="col-md-12 text-right">
+										
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Product Description Area =================-->
+
+
+
+{% endblock content %}

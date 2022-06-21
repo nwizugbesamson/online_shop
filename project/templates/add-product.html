@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block banner %}
+      <!-- Start Banner Area -->
+      <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                 
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+{% endblock banner %}
+
+
+
+
+{% block content %}
+   
+    {{wtf.csrf_token}}
+{{wtf.quick_form(form, novalidate=True)}}
+{% endblock content %}
+    

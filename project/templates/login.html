@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+	{% block banner %}
+    <!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+              
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+{% endblock banner %}
+
+{% block content %}
+	
+
+	
+	<!--================Login Box Area =================-->
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-lg-12">
+					<div class="login_form_inner">
+						<h3>Log in to enter</h3>
+						<form class="row login_form" action="{{url_for('auth.login_page')}}" method="POST"  novalidate="novalidate">
+							{{form.csrf_token}}
+							<div class="col-md-12 form-group">
+								{{form.email}}
+							</div>
+							<div class="col-md-12 form-group">
+								{{form.password}}
+							</div>
+							
+							<div class="col-md-12 form-group">
+								{{form.submit}}
+								{% if form.errors %}
+								<ul class="errors">
+									{% for error in form.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+								{% endif %}
+								
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+{% endblock content %}
